@@ -1,0 +1,2132 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insan Fadhil Maulana, S.T. | Electrical Engineer & IoT Specialist</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#eef8ff',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            900: '#0369a1',
+                            dark: '#0B0F19',
+                            card: '#131D31',
+                            border: '#1E293B'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- =========================================================
+     UNIVERSAL PROJECT IMAGE JAVASCRIPT
+     Taruh satu kali saja sebelum </body>
+     ========================================================= -->
+
+    <script>
+
+        /*
+        ============================================================
+        DAFTAR GAMBAR SETIAP PROJECT
+        ============================================================
+        Tambahkan gambar di sini jika nanti punya foto tambahan.
+        */
+
+        const projectImages = {
+
+            enms: [
+                "images/enms1.jpg",
+                "images/enms2.jpg",
+                "images/enms3.jpg",
+                "images/enms4.jpg",
+                "images/enms5.jpg",
+            ],
+
+            mlp: [
+                "images/mlp1.jpg",
+                "images/mlp2.jpg",
+                "images/mlp3.jpg",
+                "images/mlp4.jpg",
+            ],
+
+            goodwe: [
+                "images/goodwe1.jpg",
+                "images/goodwe2.jpg",
+                "images/goodwe3.jpg",
+                "images/goodwe4.jpg",
+            ],
+
+            kepyar: [
+                "images/kepyar1.jpg",
+                "images/kepyar2.jpg",
+                "images/kepyar3.jpg",
+                "images/kepyar4.jpg",
+            ],
+
+            magang: [
+                "images/magang1.jpg",
+                "images/magang2.jpg",
+                "images/magang3.jpg",
+                "images/magang4.jpg"
+            ],
+
+            kit: [
+                "images/kit1.jpg",
+                "images/kit2.jpg",
+                "images/kit3.jpg",
+                "images/kit4.jpg",
+            ],
+
+            smartlock: [
+                "images/smartlock1.jpg",
+                "images/smartlock2.jpg",
+                "images/smartlock3.jpg",
+                "images/smartlock4.jpg",
+            ],
+
+            smartoffice: [
+                "images/smartoffice1.jpg",
+                "images/smartoffice2.jpg",
+                "images/smartoffice3.jpg",
+                // "images/smartoffice4.jpg",
+            ],
+
+            setda: [
+                "images/setda1.jpg",
+                "images/setda2.jpg",
+                "images/setda3.jpg",
+                
+            ]
+
+        };
+
+
+        /*
+        ============================================================
+        INDEX GAMBAR
+        ============================================================
+        */
+
+        const projectIndexes = {
+
+            enms: 0,
+            mlp: 0,
+            goodwe: 0,
+            kepyar: 0,
+            magang: 0,
+            kit: 0,
+            smartlock: 0,
+            smartoffice: 0,
+            setda: 0
+
+        };
+
+
+        /*
+        ============================================================
+        GANTI GAMBAR DI CARD
+        ============================================================
+        */
+
+        function changeImage(project, direction) {
+
+            const images = projectImages[project];
+
+            if (!images || images.length === 0) {
+                return;
+            }
+
+
+            projectIndexes[project] += direction;
+
+
+            // Kembali ke gambar pertama
+            if (projectIndexes[project] >= images.length) {
+
+                projectIndexes[project] = 0;
+
+            }
+
+
+            // Kembali ke gambar terakhir
+            if (projectIndexes[project] < 0) {
+
+                projectIndexes[project] = images.length - 1;
+
+            }
+
+
+            const imageElement =
+                document.getElementById(project + "Image");
+
+
+            if (imageElement) {
+
+                imageElement.src =
+                    images[projectIndexes[project]];
+
+            }
+
+        }
+
+
+        /*
+        ============================================================
+        IMAGE POPUP
+        ============================================================
+        */
+
+        let popupProject = null;
+
+
+        function openImagePopup(imageSource) {
+
+            const popup =
+                document.getElementById("imagePopup");
+
+            const image =
+                document.getElementById("popupImage");
+
+
+            image.src = imageSource;
+
+            popup.classList.remove("hidden");
+            popup.classList.add("flex");
+
+            document.body.style.overflow = "hidden";
+
+
+            // Cari project berdasarkan gambar yang sedang dibuka
+            popupProject = findProjectByImage(imageSource);
+
+        }
+
+
+        /*
+        ============================================================
+        CARI PROJECT BERDASARKAN SOURCE GAMBAR
+        ============================================================
+        */
+
+        function findProjectByImage(imageSource) {
+
+            for (const project in projectImages) {
+
+                const index =
+                    projectImages[project].findIndex(
+                        image => imageSource.includes(image)
+                    );
+
+
+                if (index !== -1) {
+
+                    projectIndexes[project] = index;
+
+                    return project;
+
+                }
+
+            }
+
+            return null;
+
+        }
+
+
+        /*
+        ============================================================
+        GANTI GAMBAR DI POPUP
+        ============================================================
+        */
+
+        function changePopupImage(direction) {
+
+            if (!popupProject) {
+                return;
+            }
+
+
+            const images =
+                projectImages[popupProject];
+
+
+            projectIndexes[popupProject] += direction;
+
+
+            if (projectIndexes[popupProject] >= images.length) {
+
+                projectIndexes[popupProject] = 0;
+
+            }
+
+
+            if (projectIndexes[popupProject] < 0) {
+
+                projectIndexes[popupProject] = images.length - 1;
+
+            }
+
+
+            document.getElementById("popupImage").src =
+                images[projectIndexes[popupProject]];
+
+
+            // Sinkronkan gambar di card
+            const cardImage =
+                document.getElementById(popupProject + "Image");
+
+
+            if (cardImage) {
+
+                cardImage.src =
+                    images[projectIndexes[popupProject]];
+
+            }
+
+        }
+
+
+        /*
+        ============================================================
+        TUTUP POPUP
+        ============================================================
+        */
+
+        function closeImagePopup() {
+
+            const popup =
+                document.getElementById("imagePopup");
+
+
+            popup.classList.add("hidden");
+            popup.classList.remove("flex");
+
+
+            document.body.style.overflow = "";
+
+            popupProject = null;
+
+        }
+
+
+        /*
+        ============================================================
+        ESC = CLOSE POPUP
+        ============================================================
+        */
+
+        document.addEventListener("keydown", function(event) {
+
+            if (event.key === "Escape") {
+
+                closeImagePopup();
+
+            }
+
+            // Panah kiri/kanan juga bisa digunakan saat popup terbuka
+            if (
+                popupProject &&
+                event.key === "ArrowLeft"
+            ) {
+
+                changePopupImage(-1);
+
+            }
+
+            if (
+                popupProject &&
+                event.key === "ArrowRight"
+            ) {
+
+                changePopupImage(1);
+
+            }
+
+        });
+
+    </script>
+    
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .glass-panel {
+            background: rgba(19, 29, 49, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .glow-effect {
+            box-shadow: 0 0 35px -5px rgba(14, 165, 233, 0.25);
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 antialiased selection:bg-sky-500 selection:text-white" x-data="{ mobileMenuOpen: false, activeTab: 'all', selectedProject: null, contactSubmitted: false, formData: { name: '', email: '', message: '' } }">
+
+    <header class="fixed top-0 left-0 right-0 z-50 glass-panel border-b border-slate-800/80 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <a href="#beranda" class="flex items-center space-x-3 group">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-sky-500 to-emerald-400 flex items-center justify-center font-bold text-slate-950 text-lg shadow-lg group-hover:scale-105 transition-transform">
+                    IF
+                </div>
+                <div>
+                    <span class="block font-bold text-white tracking-wide text-base">Insan Fadhil M., S.T.</span>
+                    <span class="block text-xs text-sky-400 font-medium">Electrical & IoT Engineer</span>
+                </div>
+            </a>
+
+            <!-- Desktop Nav -->
+            <nav class="hidden md:flex items-center space-x-1 lg:space-x-6 text-sm font-medium text-slate-300">
+                <a href="#beranda" class="hover:text-sky-400 transition-colors px-3 py-2 rounded-lg hover:bg-slate-800/50">Beranda</a>
+                <a href="#tentang" class="hover:text-sky-400 transition-colors px-3 py-2 rounded-lg hover:bg-slate-800/50">Tentang</a>
+                <a href="#pengalaman" class="hover:text-sky-400 transition-colors px-3 py-2 rounded-lg hover:bg-slate-800/50">Pengalaman</a>
+                <a href="#proyek" class="hover:text-sky-400 transition-colors px-3 py-2 rounded-lg hover:bg-slate-800/50">Proyek Utama</a>
+                <a href="#akademik" class="hover:text-sky-400 transition-colors px-3 py-2 rounded-lg hover:bg-slate-800/50">Akademik & Lab</a>
+                <a href="#sertifikat" class="hover:text-sky-400 transition-colors px-3 py-2 rounded-lg hover:bg-slate-800/50">Sertifikat</a>
+                <a href="#kontak" class="hover:text-sky-400 transition-colors px-3 py-2 rounded-lg hover:bg-slate-800/50">Kontak</a>
+            </nav>
+
+            <div class="hidden md:flex items-center space-x-3">
+                <a href="#kontak" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-sky-500 to-blue-600 text-white font-medium text-sm shadow-lg shadow-sky-500/20 hover:shadow-sky-500/40 hover:scale-[1.02] active:scale-[0.98] transition-all">
+                    <i class="fa-solid fa-paper-plane mr-2"></i>Hubungi Saya
+                </a>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button @click="mobileMenuOpen = !mobileMenuOpen" class="md:hidden text-slate-300 hover:text-white p-2 rounded-lg focus:outline-none">
+                <i :class="mobileMenuOpen ? 'fa-solid fa-xmark text-2xl' : 'fa-solid fa-bars text-2xl'"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div x-show="mobileMenuOpen" @click.away="mobileMenuOpen = false" x-transition class="md:hidden glass-panel border-b border-slate-800 px-4 pt-2 pb-6 space-y-2">
+            <a href="#beranda" @click="mobileMenuOpen = false" class="block px-3 py-2 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-sky-400">Beranda</a>
+            <a href="#tentang" @click="mobileMenuOpen = false" class="block px-3 py-2 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-sky-400">Tentang</a>
+            <a href="#pengalaman" @click="mobileMenuOpen = false" class="block px-3 py-2 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-sky-400">Pengalaman</a>
+            <a href="#proyek" @click="mobileMenuOpen = false" class="block px-3 py-2 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-sky-400">Proyek Utama</a>
+            <a href="#akademik" @click="mobileMenuOpen = false" class="block px-3 py-2 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-sky-400">Akademik & Lab</a>
+            <a href="#sertifikat" @click="mobileMenuOpen = false" class="block px-3 py-2 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-sky-400">Sertifikat</a>
+            <a href="#kontak" @click="mobileMenuOpen = false" class="block px-3 py-2 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-sky-400">Kontak</a>
+        </div>
+    </header>
+
+    <section id="beranda" class="relative min-h-screen flex items-center justify-center pt-28 pb-16 overflow-hidden">
+        <!-- Background Glow Orbs -->
+        <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-sky-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute bottom-10 right-10 w-[350px] h-[350px] bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                    <div class="inline-flex items-center space-x-2 px-3 py-1.5 rounded-full bg-sky-500/10 border border-sky-500/20 text-sky-400 text-xs font-semibold tracking-wide uppercase">
+                        <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                        <span>Available for Full-time & Project Roles</span>
+                    </div>
+                    
+                    <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight text-white leading-tight">
+                        Halo, Saya <span class="bg-gradient-to-r from-sky-400 via-blue-500 to-emerald-400 bg-clip-text text-transparent">Insan Fadhil Maulana</span>
+                    </h1>
+
+                    <p class="text-lg text-slate-300 max-w-2xl mx-auto lg:mx-0 leading-relaxed">
+                        Lulusan S1 <strong class="text-white">Teknik Elektro</strong> Universitas Sebelas Maret (<span class="text-sky-400">Cum Laude, IPK 3.68</span>) dengan spesialisasi Teknik Komputer & Telekomunikasi, IoT, Embedded Systems, serta sistem tenaga listrik industri.
+                    </p>
+
+                    <div class="flex flex-wrap justify-center lg:justify-start gap-4 pt-4">
+                        <a href="#proyek" class="px-7 py-3.5 rounded-xl bg-gradient-to-r from-sky-500 to-blue-600 text-white font-semibold shadow-lg shadow-sky-500/25 hover:shadow-sky-500/40 hover:scale-105 transition-all flex items-center space-x-2">
+                            <span>Jelajahi Portofolio</span>
+                            <i class="fa-solid fa-arrow-right text-sm"></i>
+                        </a>
+                        <a href="#galeri-foto" class="px-7 py-3.5 rounded-xl glass-panel text-white font-semibold hover:bg-slate-800 transition-all border border-slate-700 flex items-center space-x-2">
+                            <i class="fa-solid fa-camera text-sky-400"></i>
+                            <span>Galeri Foto & Dokumentasi</span>
+                        </a>
+                    </div>
+
+                    <div class="pt-6 flex items-center justify-center lg:justify-start space-x-6 text-slate-400 text-sm">
+                        <div class="flex items-center space-x-2">
+                            <i class="fa-solid fa-location-dot text-sky-400"></i>
+                            <span>Jombang, Jawa Timur</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <i class="fa-solid fa-graduation-cap text-emerald-400"></i>
+                            <span>UNS Surakarta</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hero Visual Card / Avatar with Photo Slot -->
+                <div class="lg:col-span-5 flex justify-center">
+                    <div class="relative w-full max-w-md">
+                        <div class="absolute -inset-1 rounded-3xl bg-gradient-to-r from-sky-500 to-emerald-400 opacity-30 blur-lg"></div>
+                        <div class="relative glass-panel rounded-3xl p-6 glow-effect border border-slate-800 text-center space-y-4">
+                            <!-- Foto Profil / Wisuda Placeholder (Dapat diganti URL foto asli) -->
+                            <div class="relative w-40 h-50 mx-auto rounded-2xl overflow-hidden border-2 border-sky-500/30 shadow-xl bg-slate-900 group">
+                                <img src="images/Pas Foto Merah Insan.jpg" alt="Insan Fadhil Maulana" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://placehold.co/400x400/131d31/0ea5e9?text=Insan+Fadhil'">
+                                <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center pb-2">
+                                    <span class="text-[10px] text-sky-300 font-mono">S1 Teknik Elektro UNS</span>
+                                </div>
+                            </div>
+
+                            <div>
+                                <h3 class="font-bold text-white text-lg">Insan Fadhil Maulana, S.T.</h3>
+                                <p class="text-xs text-sky-400 font-mono">Electrical & IoT Engineer</p>
+                            </div>
+
+                            <div class="grid grid-cols-2 gap-3 pt-2 text-left">
+                                <div class="p-3 rounded-xl bg-slate-900/80 border border-slate-800">
+                                    <div class="text-[10px] text-sky-400 font-mono">// IPK</div>
+                                    <div class="text-sm font-bold text-white">3.68 / 4.00</div>
+                                </div>
+                                <div class="p-3 rounded-xl bg-slate-900/80 border border-slate-800">
+                                    <div class="text-[10px] text-emerald-400 font-mono">// PREDIKAT</div>
+                                    <div class="text-sm font-bold text-white">Cum Laude</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="tentang" class="py-24 bg-slate-900/50 border-t border-slate-900 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-xs font-bold uppercase tracking-wider text-sky-400 mb-2">Tentang Saya</h2>
+                <h3 class="text-3xl sm:text-4xl font-extrabold text-white">Profil Profesional & Keahlian Teknikal</h3>
+                <p class="text-slate-400 mt-3">Menggabungkan keilmuan elektro, pemrograman, dan manajemen proyek untuk solusi rekayasa nyata.</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Bio Card -->
+                <div class="lg:col-span-1 glass-panel p-8 rounded-3xl border border-slate-800 flex flex-col justify-between">
+                    <div>
+                        <div class="w-16 h-16 rounded-2xl bg-sky-500/10 border border-sky-500/20 flex items-center justify-center text-sky-400 text-2xl mb-6">
+                            <i class="fa-solid fa-user-tie"></i>
+                        </div>
+                        <h4 class="text-xl font-bold text-white mb-3">Insan Fadhil Maulana, S.T.</h4>
+                        <p class="text-slate-300 text-sm leading-relaxed">
+                            Lulusan S1 Teknik Elektro UNS dengan IPK 3.68 (Cum Laude). Berpengalaman langsung dalam pengembangan IoT, sistem tenaga listrik, embedded systems, otomasi industri, dan startup teknologi.
+                        </p>
+                    </div>
+                    <div class="mt-8 pt-6 border-t border-slate-800/80 space-y-3">
+                        <div class="flex items-center justify-between text-sm">
+                            <span class="text-slate-400">Pendidikan:</span>
+                            <span class="text-white font-medium">S1 Teknik Elektro UNS</span>
+                        </div>
+                        <div class="flex items-center justify-between text-sm">
+                            <span class="text-slate-400">Predikat:</span>
+                            <span class="text-emerald-400 font-medium">Cum Laude (3.68)</span>
+                        </div>
+                        <div class="flex items-center justify-between text-sm">
+                            <span class="text-slate-400">Bahasa:</span>
+                            <span class="text-white font-medium">Indonesia (Native), Inggris (Intermediate)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Technical Skills Matrix -->
+                <div class="lg:col-span-2 glass-panel p-8 rounded-3xl border border-slate-800 space-y-8">
+                    <h4 class="text-xl font-bold text-white flex items-center space-x-3">
+                        <i class="fa-solid fa-microchip text-sky-400"></i>
+                        <span>Kemampuan Teknikal (Technical Skills)</span>
+                    </h4>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Power Systems -->
+                        <div class="p-5 rounded-2xl bg-slate-950/50 border border-slate-800/80">
+                            <h5 class="font-semibold text-white mb-2 flex items-center space-x-2 text-sm">
+                                <i class="fa-solid fa-bolt text-yellow-400"></i>
+                                <span>Power Systems</span>
+                            </h5>
+                            <p class="text-xs text-slate-400 leading-relaxed">
+                                Analisis rangkaian AC/DC (1 & 3 fasa), instrumentasi & pengukuran (multimeter, osiloskop, power meter), analisis sistem distribusi listrik & relay proteksi.
+                            </p>
+                        </div>
+
+                        <!-- Embedded & IoT -->
+                        <div class="p-5 rounded-2xl bg-slate-950/50 border border-slate-800/80">
+                            <h5 class="font-semibold text-white mb-2 flex items-center space-x-2 text-sm">
+                                <i class="fa-solid fa-wifi text-sky-400"></i>
+                                <span>Embedded & IoT</span>
+                            </h5>
+                            <p class="text-xs text-slate-400 leading-relaxed">
+                                Arduino, ESP32, STM32, Raspberry Pi, integrasi sensor, MQTT, Modbus RS-485, IoT Trainer Kit design.
+                            </p>
+                        </div>
+
+                        <!-- Software & Programming -->
+                        <div class="p-5 rounded-2xl bg-slate-950/50 border border-slate-800/80">
+                            <h5 class="font-semibold text-white mb-2 flex items-center space-x-2 text-sm">
+                                <i class="fa-solid fa-code text-emerald-400"></i>
+                                <span>Software & Programming</span>
+                            </h5>
+                            <p class="text-xs text-slate-400 leading-relaxed">
+                                HTML, CSS, JavaScript, PHP, Python, MySQL, Laravel, Multilayer Perceptron (ANN) Predictive Models.
+                            </p>
+                        </div>
+
+                        <!-- Tools & Simulation -->
+                        <div class="p-5 rounded-2xl bg-slate-950/50 border border-slate-800/80">
+                            <h5 class="font-semibold text-white mb-2 flex items-center space-x-2 text-sm">
+                                <i class="fa-solid fa-screwdriver-wrench text-purple-400"></i>
+                                <span>Tools & Simulation</span>
+                            </h5>
+                            <p class="text-xs text-slate-400 leading-relaxed">
+                                Proteus, Multisim, ETAP, MATLAB/Simulink, EasyEDA, CADe SIMU, Linux Ubuntu, VPS deployment & configuration.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="pengalaman" class="py-24 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-xs font-bold uppercase tracking-wider text-sky-400 mb-2">Karier & Pengalaman</h2>
+                <h3 class="text-3xl sm:text-4xl font-extrabold text-white">Pengalaman Profesional</h3>
+                <p class="text-slate-400 mt-3">Jejak kontribusi industri mulai dari sektor migas, startup teknologi, hingga administrasi data.</p>
+            </div>
+
+            <div class="space-y-6">
+                <!-- Experience 1: Trofis Startup -->
+                <div class="glass-panel p-6 sm:p-8 rounded-3xl border border-slate-800 hover:border-sky-500/50 transition-all">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
+                        <div>
+                            <span class="px-3 py-1 rounded-full bg-sky-500/10 text-sky-400 text-xs font-semibold">Startup & Kepemimpinan</span>
+                            <h4 class="text-xl font-bold text-white mt-2">CEO/Founder - Trofis Startup (SEMESTA UNS)</h4>
+                            <p class="text-slate-400 text-sm">Surakarta, Jawa Tengah</p>
+                        </div>
+                        <span class="text-xs font-mono text-slate-400 bg-slate-900 px-3 py-1.5 rounded-xl border border-slate-800 self-start md:self-auto">Jun 2024 - Des 2024</span>
+                    </div>
+                    <ul class="list-disc list-inside space-y-2 text-slate-300 text-sm leading-relaxed">
+                        <li>Memimpin tim startup berbasis teknologi dengan 5 anggota inti serta tim kontrak berbasis proyek.</li>
+                        <li>Menyusun model bisnis B2B, B2C, dan B2G di lingkup Jawa Tengah, proyeksi finansial, dan materi pitching program inkubasi nasional.</li>
+                        <li>Mengelola kerja sama dan pelaksanaan proyek teknologi bersama PT Batex senilai Rp28 juta, berupa instalasi sistem monitoring energi panel listrik di Kantor Setda Jawa Tengah, Semarang.</li>
+                    </ul>
+                </div>
+
+                <!-- Experience 2: Pertamina EP Cepu -->
+                <div class="glass-panel p-6 sm:p-8 rounded-3xl border border-slate-800 hover:border-sky-500/50 transition-all">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
+                        <div>
+                            <span class="px-3 py-1 rounded-full bg-yellow-500/10 text-yellow-400 text-xs font-semibold">Magang Industri / Sistem Kelistrikan</span>
+                            <h4 class="text-xl font-bold text-white mt-2">Magang - Divisi Sistem Kelistrikan, PT Pertamina EP Cepu</h4>
+                            <p class="text-slate-400 text-sm">Central Processing Plant Gundih, Blora, Jawa Tengah</p>
+                        </div>
+                        <span class="text-xs font-mono text-slate-400 bg-slate-900 px-3 py-1.5 rounded-xl border border-slate-800 self-start md:self-auto">Jan 2024 - Feb 2024</span>
+                    </div>
+                    <ul class="list-disc list-inside space-y-2 text-slate-300 text-sm leading-relaxed">
+                        <li>Melakukan asesmen lapangan terhadap sistem distribusi listrik dan relay kontrol.</li>
+                        <li>Menganalisis penambahan relay NC/NO pada unit VSD di sumur LDK-235 menggunakan software simulasi CADE SIMU untuk evaluasi skema proteksi dan otomasi (auto ON setelah blackout).</li>
+                        <li>Mempelajari sistem panel surya, UPS, dan distribusi daya untuk identifikasi optimasi keandalan operasional.</li>
+                    </ul>
+                </div>
+
+                <!-- Experience 3: Global Farmindo Lestari -->
+                <div class="glass-panel p-6 sm:p-8 rounded-3xl border border-slate-800 hover:border-sky-500/50 transition-all">
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
+                        <div>
+                            <span class="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 text-xs font-semibold">Administrasi & Data</span>
+                            <h4 class="text-xl font-bold text-white mt-2">Freelance - Data Entry Clerk, PT Global Farmindo Lestari</h4>
+                            <p class="text-slate-400 text-sm">Malang, Jawa Timur</p>
+                        </div>
+                        <span class="text-xs font-mono text-slate-400 bg-slate-900 px-3 py-1.5 rounded-xl border border-slate-800 self-start md:self-auto">Sept 2025</span>
+                    </div>
+                    <ul class="list-disc list-inside space-y-2 text-slate-300 text-sm leading-relaxed">
+                        <li>Mengolah dan memasukkan data keuangan dengan volume sekitar 30-40 entri per hari ke dalam sistem Accurate.</li>
+                        <li>Menjaga akurasi data dengan tingkat kesesuaian tinggi untuk meminimalkan potensi selisih laporan.</li>
+                        <li>Mendukung proses migrasi data dari sistem lama ke sistem baru guna meningkatkan efisiensi administrasi.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="proyek" class="py-24 bg-slate-900/50 border-t border-slate-900 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-xs font-bold uppercase tracking-wider text-sky-400 mb-2">Portofolio Karya</h2>
+                <h3 class="text-3xl sm:text-4xl font-extrabold text-white">Proyek Utama & Inovasi Rekayasa</h3>
+                <p class="text-slate-400 mt-3">Eksplorasi proyek nyata dari tugas akhir ENMS, instalasi IoT desa, hingga otomatisasi industri.</p>
+            </div>
+
+            <!-- Filter Buttons -->
+            <div class="flex flex-wrap justify-center gap-2 mb-12">
+                <button @click="activeTab = 'all'" :class="activeTab === 'all' ? 'bg-sky-500 text-white shadow-lg shadow-sky-500/25' : 'bg-slate-900 text-slate-400 hover:text-white border border-slate-800'" class="px-5 py-2.5 rounded-xl text-sm font-medium transition-all">Semua Proyek</button>
+                <button @click="activeTab = 'iot'" :class="activeTab === 'iot' ? 'bg-sky-500 text-white shadow-lg shadow-sky-500/25' : 'bg-slate-900 text-slate-400 hover:text-white border border-slate-800'" class="px-5 py-2.5 rounded-xl text-sm font-medium transition-all">IoT & Embedded</button>
+                <button @click="activeTab = 'power'" :class="activeTab === 'power' ? 'bg-sky-500 text-white shadow-lg shadow-sky-500/25' : 'bg-slate-900 text-slate-400 hover:text-white border border-slate-800'" class="px-5 py-2.5 rounded-xl text-sm font-medium transition-all">Power Systems</button>
+                <button @click="activeTab = 'web'" :class="activeTab === 'web' ? 'bg-sky-500 text-white shadow-lg shadow-sky-500/25' : 'bg-slate-900 text-slate-400 hover:text-white border border-slate-800'" class="px-5 py-2.5 rounded-xl text-sm font-medium transition-all">Web</button>
+                <button @click="activeTab = 'startup'" :class="activeTab === 'startup' ? 'bg-sky-500 text-white shadow-lg shadow-sky-500/25' : 'bg-slate-900 text-slate-400 hover:text-white border border-slate-800'" class="px-5 py-2.5 rounded-xl text-sm font-medium transition-all">Startup</button>
+            </div>
+
+            <!-- Project Cards Grid -->
+            <!-- =========================================================
+                PROJECT CARDS GRID
+                ========================================================= -->
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+
+                <!-- =====================================================
+                    PROJECT 1: ENMS
+                    ===================================================== -->
+
+                <div x-show="activeTab === 'all' || activeTab === 'web'"
+                    class="glass-panel rounded-3xl overflow-hidden border border-slate-800 flex flex-col justify-between hover:border-sky-500/50 transition-all group">
+
+                    <!-- IMAGE -->
+                    <div class="h-64 overflow-hidden relative bg-slate-900">
+
+                        <img
+                            id="enmsImage"
+                            src="images/enms1.jpg"
+                            alt="Energy Management System Gedung 3 FT UNS"
+                            onclick="openImagePopup(this.src)"
+                            class="w-full h-full object-cover cursor-zoom-in group-hover:scale-105 transition-transform duration-500"
+                        >
+
+                        <!-- Gradient -->
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent pointer-events-none"></div>
+
+                        <!-- Category -->
+                        <div class="absolute top-4 left-4 pointer-events-none">
+                            <span class="px-3 py-1 rounded-full bg-slate-950/80 backdrop-blur-md text-yellow-400 text-xs font-semibold border border-slate-700">
+                                IoT Lab Project
+                            </span>
+                        </div>
+
+                        <!-- Zoom -->
+                        <div class="absolute bottom-4 right-4 w-10 h-10 rounded-full bg-slate-950/80 backdrop-blur-md flex items-center justify-center text-white pointer-events-none">
+                            <i class="fa-solid fa-magnifying-glass-plus"></i>
+                        </div>
+
+                        <!-- Previous -->
+                        <button
+                            onclick="changeImage('enms', -1)"
+                            class="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-slate-950/80 text-white hover:bg-sky-500 transition-all flex items-center justify-center z-10">
+                            <i class="fa-solid fa-chevron-left"></i>
+                        </button>
+
+                        <!-- Next -->
+                        <button
+                            onclick="changeImage('enms', 1)"
+                            class="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-slate-950/80 text-white hover:bg-sky-500 transition-all flex items-center justify-center z-10">
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </button>
+
+                    </div>
+
+
+                    <!-- CONTENT -->
+                    <div class="p-6 space-y-4">
+
+                        <div class="flex justify-between items-center">
+                            <span class="text-slate-400 text-xs font-mono">
+                                Energy Management System
+                            </span>
+
+                            <i class="fa-solid fa-chart-line text-sky-400 text-xl"></i>
+                        </div>
+
+                        <h4 class="text-xl font-bold text-white group-hover:text-sky-400 transition-colors">
+                            Energy Management System di Gedung Fakultas Teknik UNS
+                        </h4>
+
+                        <p class="text-slate-300 text-sm leading-relaxed">
+                            Mengembangkan Sistem Manajemen Energi (Energy Management System)
+                            untuk gedung-gedung Fakultas Teknik UNS dengan mengintegrasikan
+                            power meter dan sensor monitoring berbasis modul PZEM untuk
+                            pengambilan data kelistrikan.
+                        </p>
+
+                        <div class="flex flex-wrap gap-2 pt-2">
+
+                             <span class="text-xs px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 font-mono">
+                                ESP32
+                            </span>
+
+                            <span class="text-xs px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 font-mono">
+                                Modbus RS-485
+                            </span>
+
+                            <span class="text-xs px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 font-mono">
+                                MQTT
+                            </span>
+
+                            <span class="text-xs px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 font-mono">
+                                HTTP
+                            </span>
+                            
+                            <span class="text-xs px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 font-mono">
+                                Power Meter
+                            </span>
+                            
+                            <span class="text-xs px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 font-mono">
+                                PZEM AC/DC
+                            </span>
+                            
+                            <span class="text-xs px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 font-mono">
+                                MySQL
+                            </span>
+                            
+                            <span class="text-xs px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 font-mono">
+                                IoT
+                            </span>
+                        </div>
+
+                    </div>
+
+
+                    <!-- BUTTON -->
+                    <div class="p-6 pt-0">
+
+                         <button
+                            @click="selectedProject = {
+                                title: 'Energy Management System (ENMS) FT UNS',
+                                category: 'IoT & Energy Management System',
+                                desc: 'Mengembangkan Sistem Manajemen Energi (Energy Management System) untuk gedung-gedung Fakultas Teknik UNS dengan mengintegrasikan power meter dan sensor monitoring berbasis modul PZEM. Sistem menggunakan komunikasi Modbus RS-485 yang dikonversi ke TTL untuk diproses oleh mikrokontroler, kemudian mengirimkan data ke database terpusat melalui protokol HTTP dan MQTT. Data selanjutnya diproses pada backend dan divisualisasikan melalui website untuk memudahkan pemantauan konsumsi energi.',
+                                details: [
+                                    'Akuisisi Data Kelistrikan: Mengambil data parameter listrik dari power meter dan sensor monitoring custom berbasis modul PZEM.',
+                                    'Komunikasi Data: Mengimplementasikan protokol Modbus RS-485 dan konversi RS-485 ke TTL untuk komunikasi dengan sistem mikrokontroler.',
+                                    'Data Transmission: Mengirimkan data monitoring secara berkala ke database terpusat menggunakan protokol HTTP dan MQTT.',
+                                    'Backend & Database: Melakukan pemrosesan, penyimpanan, dan pengelolaan data energi pada sistem backend.',
+                                    'Web Visualization: Mengembangkan antarmuka website dengan visualisasi data untuk memudahkan pengguna dalam memantau kondisi dan konsumsi energi gedung.'
+                                ],
+                                tech: ['ESP32', 'PZEM', 'Modbus RS-485', 'Power Meter', 'MQTT', 'HTTP', 'MySQL', 'IoT']
+                            }"
+                            class="w-full py-3 rounded-xl bg-slate-800 hover:bg-sky-500 hover:text-white text-slate-200 text-sm font-semibold transition-all flex items-center justify-center space-x-2">
+
+                            <span>Lihat Detail Proyek</span>
+                            <i class="fa-solid fa-arrow-right text-xs"></i>
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =====================================================
+                    PROJECT 2: MLP
+                    ===================================================== -->
+
+                <div x-show="activeTab === 'all' || activeTab === 'web'"
+                    class="glass-panel rounded-3xl overflow-hidden border border-slate-800 flex flex-col justify-between hover:border-sky-500/50 transition-all group">
+
+                    <!-- IMAGE -->
+                    <div class="h-64 overflow-hidden relative bg-slate-900">
+
+                        <img
+                            id="mlpImage"
+                            src="images/mlp1.jpg"
+                            alt="Energy Management System Gedung 3 FT UNS"
+                            onclick="openImagePopup(this.src)"
+                            class="w-full h-full object-cover cursor-zoom-in group-hover:scale-105 transition-transform duration-500"
+                        >
+
+                        <!-- Gradient -->
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent pointer-events-none"></div>
+
+                        <!-- Category -->
+                        <div class="absolute top-4 left-4 pointer-events-none">
+                            <span class="px-3 py-1 rounded-full bg-slate-950/80 backdrop-blur-md text-emerald-400 text-xs font-semibold border border-slate-700">
+                                Tugas Akhir / Web
+                            </span>
+                        </div>
+
+                        <!-- Zoom -->
+                        <div class="absolute bottom-4 right-4 w-10 h-10 rounded-full bg-slate-950/80 backdrop-blur-md flex items-center justify-center text-white pointer-events-none">
+                            <i class="fa-solid fa-magnifying-glass-plus"></i>
+                        </div>
+
+                        <!-- Previous -->
+                        <button
+                            onclick="changeImage('mlp', -1)"
+                            class="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-slate-950/80 text-white hover:bg-sky-500 transition-all flex items-center justify-center z-10">
+                            <i class="fa-solid fa-chevron-left"></i>
+                        </button>
+
+                        <!-- Next -->
+                        <button
+                            onclick="changeImage('mlp', 1)"
+                            class="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-slate-950/80 text-white hover:bg-sky-500 transition-all flex items-center justify-center z-10">
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </button>
+
+                    </div>
+
+
+                    <!-- CONTENT -->
+                    <div class="p-6 space-y-4">
+
+                        <div class="flex justify-between items-center">
+                            <span class="text-slate-400 text-xs font-mono">
+                                Electrical Energy Prediction
+                            </span>
+
+                            <i class="fa-solid fa-brain text-sky-400 text-xl"></i>
+                        </div>
+
+                        <h4 class="text-xl font-bold text-white group-hover:text-sky-400 transition-colors">
+                            Electrical Energy Prediction with Multilayer Perceptron
+                        </h4>
+
+                        <p class="text-slate-300 text-sm leading-relaxed">
+                            Implementasi Sistem Prediksi Energi Berbasis Multilayer Perceptron
+                            pada Website Energy Management System Gedung 3 FT UNS.
+                            Arsitektur 6-24-16-1 dengan integrasi Laravel API.
+                        </p>
+
+                        <div class="flex flex-wrap gap-2 pt-2">
+
+                            <span class="text-xs px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 font-mono">
+                                PHP Laravel
+                            </span>
+
+                            <span class="text-xs px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 font-mono">
+                                Python MLP
+                            </span>
+
+                            <span class="text-xs px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 font-mono">
+                                API REST
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- BUTTON -->
+                    <div class="p-6 pt-0">
+
+                        <button
+                            @click="selectedProject = {
+                                title: 'Energy Prediction System using MLP',
+                                category: 'Final Project & Web Development',
+                                desc: 'Mengembangkan model Multilayer Perceptron (MLP) untuk prediksi konsumsi energi harian dan bulanan pada Gedung 3 Fakultas Teknik UNS. Sistem ini mengumpulkan data real-time dari smart power meter dan menampilkan visualisasi grafik interaktif pada platform web berbasis Laravel PHP.',
+                                details: [
+                                    'Arsitektur MLP: Input Layer (6 neuron), Hidden Layer 1 (24 neuron), Hidden Layer 2 (16 neuron), dan Output Layer (1 neuron prediksi energi).',
+                                    'Integrasi Backend: Menyiapkan API endpoint di Laravel (EnergyPredictController) untuk sinkronisasi data prediksi otomatis.',
+                                    'Evaluasi Akurasi: Pengujian model dengan metrik MAPE untuk memastikan tingkat kesesuaian prediksi yang tinggi terhadap konsumsi nyata.'
+                                ],
+                                tech: ['PHP', 'Laravel', 'Python', 'Neural Network', 'MySQL', 'Chart.js']
+                            }"
+                            class="w-full py-3 rounded-xl bg-slate-800 hover:bg-sky-500 hover:text-white text-slate-200 text-sm font-semibold transition-all flex items-center justify-center space-x-2">
+
+                            <span>Lihat Detail Proyek</span>
+                            <i class="fa-solid fa-arrow-right text-xs"></i>
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- =====================================================
+                    PROJECT 3: GOODWE
+                    ===================================================== -->
+
+                <div x-show="activeTab === 'all' || activeTab === 'iot' || activeTab === 'web'"
+                    class="glass-panel rounded-3xl overflow-hidden border border-slate-800 flex flex-col justify-between hover:border-sky-500/50 transition-all group">
+
+                    <!-- IMAGE -->
+                    <div class="h-64 overflow-hidden relative bg-slate-900">
+
+                        <img
+                            id="goodweImage"
+                            src="images/goodwe3.jpg"
+                            alt="Automated GoodWe SEMS Data Scraper"
+                            onclick="openImagePopup(this.src)"
+                            class="w-full h-full object-cover cursor-zoom-in group-hover:scale-105 transition-transform duration-500"
+                        >
+
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent pointer-events-none"></div>
+
+                        <div class="absolute top-4 left-4 pointer-events-none">
+                            <span class="px-3 py-1 rounded-full bg-slate-950/80 backdrop-blur-md text-sky-400 text-xs font-semibold border border-slate-700">
+                                IoT & Automation
+                            </span>
+                        </div>
+
+                        <div class="absolute bottom-4 right-4 w-10 h-10 rounded-full bg-slate-950/80 backdrop-blur-md flex items-center justify-center text-white pointer-events-none">
+                            <i class="fa-solid fa-magnifying-glass-plus"></i>
+                        </div>
+
+                        <button
+                            onclick="changeImage('goodwe', -1)"
+                            class="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-slate-950/80 text-white hover:bg-sky-500 transition-all flex items-center justify-center z-10">
+                            <i class="fa-solid fa-chevron-left"></i>
+                        </button>
+
+                        <button
+                            onclick="changeImage('goodwe', 1)"
+                            class="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-slate-950/80 text-white hover:bg-sky-500 transition-all flex items-center justify-center z-10">
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </button>
+
+                    </div>
+
+
+                    <div class="p-6 space-y-4">
+
+                        <div class="flex justify-between items-center">
+                            <span class="text-slate-400 text-xs font-mono">
+                                IoT & Automation
+                            </span>
+
+                            <i class="fa-solid fa-server text-sky-400 text-xl"></i>
+                        </div>
+
+                        <h4 class="text-xl font-bold text-white group-hover:text-sky-400 transition-colors">
+                            Automated GoodWe SEMS Data Scraper & Uploader
+                        </h4>
+
+                        <p class="text-slate-300 text-sm leading-relaxed">
+                            Mengembangkan skrip Python & Selenium yang berjalan di VPS untuk otomatisasi
+                            login, ekstraksi data PV generation, daya, dan pendapatan dari inverter GoodWe
+                            secara berkala.
+                        </p>
+
+                        <div class="flex flex-wrap gap-2 pt-2">
+
+                            <span class="text-xs px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 font-mono">
+                                Python
+                            </span>
+
+                            <span class="text-xs px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 font-mono">
+                                Selenium
+                            </span>
+
+                            <span class="text-xs px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 font-mono">
+                                Linux VPS / Cron
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="p-6 pt-0">
+
+                        <button
+                            @click="selectedProject = {
+                                title: 'Automated GoodWe SEMS Data Scraper',
+                                category: 'IoT & Python Automation',
+                                desc: 'Sistem otomatisasi berbasis Python dan Selenium untuk mengambil data photovoltaic (PV) dari portal SEMS GoodWe inverter. Skrip mengekstrak parameter seperti PV generation, daya aktual, dan income harian lalu mengunggahnya ke Smart ENMS UNS API setiap 5 menit.',
+                                details: [
+                                    'Automated Login & Session Handling pada web portal SEMS.',
+                                    'Ekstraksi berkala data daya (kW), energi harian (kWh), dan total pendapatan (IDR).',
+                                    'Konfigurasi Cron Job di Linux VPS untuk monitoring tenaga surya secara kontinu 24/7.'
+                                ],
+                                tech: ['Python', 'Selenium', 'REST API', 'Linux VPS', 'Cron Job']
+                            }"
+                            class="w-full py-3 rounded-xl bg-slate-800 hover:bg-sky-500 hover:text-white text-slate-200 text-sm font-semibold transition-all flex items-center justify-center space-x-2">
+
+                            <span>Lihat Detail Proyek</span>
+                            <i class="fa-solid fa-arrow-right text-xs"></i>
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- =====================================================
+                    PROJECT 4: KEPYAR
+                    ===================================================== -->
+
+                <div x-show="activeTab === 'all' || activeTab === 'web'"
+                    class="glass-panel rounded-3xl overflow-hidden border border-slate-800 flex flex-col justify-between hover:border-sky-500/50 transition-all group">
+
+                    <div class="h-64 overflow-hidden relative bg-slate-900">
+
+                        <img
+                            id="kepyarImage"
+                            src="images/kepyar1.jpg"
+                            alt="Smart Solar Panel Monitoring Desa Kepyar"
+                            onclick="openImagePopup(this.src)"
+                            class="w-full h-full object-cover cursor-zoom-in group-hover:scale-105 transition-transform duration-500"
+                        >
+
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent pointer-events-none"></div>
+
+                        <div class="absolute top-4 left-4 pointer-events-none">
+                            <span class="px-3 py-1 rounded-full bg-slate-950/80 backdrop-blur-md text-purple-400 text-xs font-semibold border border-slate-700">
+                                MBKM Grant / Web
+                            </span>
+                        </div>
+
+                        <div class="absolute bottom-4 right-4 w-10 h-10 rounded-full bg-slate-950/80 backdrop-blur-md flex items-center justify-center text-white pointer-events-none">
+                            <i class="fa-solid fa-magnifying-glass-plus"></i>
+                        </div>
+
+                        <button
+                            onclick="changeImage('kepyar', -1)"
+                            class="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-slate-950/80 text-white hover:bg-purple-500 transition-all flex items-center justify-center z-10">
+                            <i class="fa-solid fa-chevron-left"></i>
+                        </button>
+
+                        <button
+                            onclick="changeImage('kepyar', 1)"
+                            class="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-slate-950/80 text-white hover:bg-purple-500 transition-all flex items-center justify-center z-10">
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </button>
+
+                    </div>
+
+
+                    <div class="p-6 space-y-4">
+
+                        <div class="flex justify-between items-center">
+                            <span class="text-slate-400 text-xs font-mono">
+                                MBKM Grant Project 2024
+                            </span>
+
+                            <i class="fa-solid fa-solar-panel text-sky-400 text-xl"></i>
+                        </div>
+
+                        <h4 class="text-xl font-bold text-white group-hover:text-sky-400 transition-colors">
+                            Smart Solar Panel Monitoring & Control - Desa Kepyar
+                        </h4>
+
+                        <p class="text-slate-300 text-sm leading-relaxed">
+                            Ketua Tim MBKM Grant Project 2024 di Wonogiri. Mengembangkan website
+                            profil desa & sistem monitoring PJU (Penerangan Jalan Umum) tenaga surya
+                            berbasis IoT dan HTTP API.
+                        </p>
+
+                        <div class="flex flex-wrap gap-2 pt-2">
+
+                            <span class="text-xs px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 font-mono">
+                                ESP32
+                            </span>
+
+                            <span class="text-xs px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 font-mono">
+                                HTTP/API
+                            </span>
+
+                            <span class="text-xs px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 font-mono">
+                                Web Dashboard
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="p-6 pt-0">
+
+                        <button
+                            @click="selectedProject = {
+                                title: 'Smart Solar Panel Monitoring & Control (Desa Kepyar)',
+                                category: 'MBKM Grant Project 2024',
+                                desc: 'Proyek hibah MBKM Digitalisasi Desa di Wonogiri. Memimpin tim dalam mengintegrasikan perangkat keras solar panel PJU dengan platform web monitoring, dilengkapi sistem autentikasi pengguna dan pemantauan energi real-time.',
+                                details: [
+                                    'Pemasangan hardware box kontrol solar panel PJU di titik strategis desa.',
+                                    'Integrasi sensor dan mikrokontroler dengan komunikasi HTTP/API ke server pusat.',
+                                    'Pengembangan website profil dan dashboard monitoring energi yang diakses pemangku kepentingan lokal.'
+                                ],
+                                tech: ['Embedded C', 'ESP32', 'PHP', 'HTML/CSS', 'IoT Sensors']
+                            }"
+                            class="w-full py-3 rounded-xl bg-slate-800 hover:bg-sky-500 hover:text-white text-slate-200 text-sm font-semibold transition-all flex items-center justify-center space-x-2">
+
+                            <span>Lihat Detail Proyek</span>
+                            <i class="fa-solid fa-arrow-right text-xs"></i>
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- =====================================================
+                    PROJECT 5: PERTAMINA VSD
+                    ===================================================== -->
+
+                <div x-show="activeTab === 'all' || activeTab === 'power'"
+                    class="glass-panel rounded-3xl overflow-hidden border border-slate-800 flex flex-col justify-between hover:border-sky-500/50 transition-all group">
+
+                    <div class="h-64 overflow-hidden relative bg-slate-900">
+
+                        <img
+                            id="magangImage"
+                            src="images/magang1.jpg"
+                            alt="VSD Control Circuit Analysis at Well LDK-235"
+                            onclick="openImagePopup(this.src)"
+                            class="w-full h-full object-cover cursor-zoom-in group-hover:scale-105 transition-transform duration-500"
+                        >
+
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent pointer-events-none"></div>
+
+                        <div class="absolute top-4 left-4 pointer-events-none">
+                            <span class="px-3 py-1 rounded-full bg-slate-950/80 backdrop-blur-md text-yellow-400 text-xs font-semibold border border-slate-700">
+                                Power & Control
+                            </span>
+                        </div>
+
+                        <div class="absolute bottom-4 right-4 w-10 h-10 rounded-full bg-slate-950/80 backdrop-blur-md flex items-center justify-center text-white pointer-events-none">
+                            <i class="fa-solid fa-magnifying-glass-plus"></i>
+                        </div>
+
+                        <button
+                            onclick="changeImage('magang', -1)"
+                            class="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-slate-950/80 text-white hover:bg-yellow-500 transition-all flex items-center justify-center z-10">
+                            <i class="fa-solid fa-chevron-left"></i>
+                        </button>
+
+                        <button
+                            onclick="changeImage('magang', 1)"
+                            class="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-slate-950/80 text-white hover:bg-yellow-500 transition-all flex items-center justify-center z-10">
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </button>
+
+                    </div>
+
+
+                    <div class="p-6 space-y-4">
+
+                        <div class="flex justify-between items-center">
+                            <span class="text-slate-400 text-xs font-mono">
+                                Industrial Power & Control
+                            </span>
+
+                            <i class="fa-solid fa-bolt text-yellow-400 text-xl"></i>
+                        </div>
+
+                        <h4 class="text-xl font-bold text-white group-hover:text-sky-400 transition-colors">
+                            VSD Control Circuit Analysis & Automation at Well LDK-235
+                        </h4>
+
+                        <p class="text-slate-300 text-sm leading-relaxed">
+                            Analisis penambahan relay NC/NO pada unit VSD di sumur LDK-235
+                            PT Pertamina EP Cepu menggunakan CADE SIMU untuk skema proteksi
+                            dan restart otomatis pasca-blackout.
+                        </p>
+
+                        <div class="flex flex-wrap gap-2 pt-2">
+
+                            <span class="text-xs px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 font-mono">
+                                CADE SIMU
+                            </span>
+
+                            <span class="text-xs px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 font-mono">
+                                Relay Logic
+                            </span>
+
+                            <span class="text-xs px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 font-mono">
+                                VSD Automation
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="p-6 pt-0">
+
+                        <button
+                            @click="selectedProject = {
+                                title: 'VSD Control Circuit Analysis at Well LDK-235 (Pertamina EP)',
+                                category: 'Industrial Power & Control Systems',
+                                desc: 'Evaluasi mendalam pada sistem kontrol Variable Speed Drive (VSD) di Central Processing Plant Gundih. Merancang skema penambahan relay logika Normal Close (NC) dan Normal Open (Open/Close timer) untuk mengaktifkan fitur auto-restart setelah pemadaman listrik.',
+                                details: [
+                                    'Simulasi rangkaian kontrol menggunakan software CADE SIMU.',
+                                    'Mengurangi intervensi manual operator pasca blackout dengan otomatisasi restart VSD.',
+                                    'Meningkatkan keandalan operasional distribusi sumur minyak dan gas.'
+                                ],
+                                tech: ['CADE SIMU', 'Relay Control', 'VSD', 'Electrical Distribution', 'Safety Systems']
+                            }"
+                            class="w-full py-3 rounded-xl bg-slate-800 hover:bg-sky-500 hover:text-white text-slate-200 text-sm font-semibold transition-all flex items-center justify-center space-x-2">
+
+                            <span>Lihat Detail Proyek</span>
+                            <i class="fa-solid fa-arrow-right text-xs"></i>
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- =====================================================
+                    PROJECT 6: IOT TRAINER KIT
+                    ===================================================== -->
+
+                <div x-show="activeTab === 'all' || activeTab === 'iot'"
+                    class="glass-panel rounded-3xl overflow-hidden border border-slate-800 flex flex-col justify-between hover:border-sky-500/50 transition-all group">
+
+                    <div class="h-64 overflow-hidden relative bg-slate-900">
+
+                        <img
+                            id="kitImage"
+                            src="images/kit1.jpg"
+                            alt="IoT Trainer Kit Collaboration"
+                            onclick="openImagePopup(this.src)"
+                            class="w-full h-full object-cover cursor-zoom-in group-hover:scale-105 transition-transform duration-500"
+                        >
+
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent pointer-events-none"></div>
+
+                        <div class="absolute top-4 left-4 pointer-events-none">
+                            <span class="px-3 py-1 rounded-full bg-slate-950/80 backdrop-blur-md text-sky-400 text-xs font-semibold border border-slate-700">
+                                IoT Lab & Education
+                            </span>
+                        </div>
+
+                        <div class="absolute bottom-4 right-4 w-10 h-10 rounded-full bg-slate-950/80 backdrop-blur-md flex items-center justify-center text-white pointer-events-none">
+                            <i class="fa-solid fa-magnifying-glass-plus"></i>
+                        </div>
+
+                        <button
+                            onclick="changeImage('kit', -1)"
+                            class="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-slate-950/80 text-white hover:bg-sky-500 transition-all flex items-center justify-center z-10">
+                            <i class="fa-solid fa-chevron-left"></i>
+                        </button>
+
+                        <button
+                            onclick="changeImage('kit', 1)"
+                            class="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-slate-950/80 text-white hover:bg-sky-500 transition-all flex items-center justify-center z-10">
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </button>
+
+                    </div>
+
+
+                    <div class="p-6 space-y-4">
+
+                        <div class="flex justify-between items-center">
+                            <span class="text-slate-400 text-xs font-mono">
+                                IoT Laboratory & Education
+                            </span>
+
+                            <i class="fa-solid fa-graduation-cap text-sky-400 text-xl"></i>
+                        </div>
+
+                        <h4 class="text-xl font-bold text-white group-hover:text-sky-400 transition-colors">
+                            IoT Trainer Kit Development
+                        </h4>
+
+                        <p class="text-slate-300 text-sm leading-relaxed">
+                            Mengembangkan mini IoT Trainer Kit sebagai media pembelajaran
+                            bagi mahasiswa Teknik Elektro maupun pengguna umum, dilengkapi
+                            dengan buku panduan penggunaan dan materi pembelajaran.
+                            Berkolaborasi dengan PT Nocola Cilacap dalam pengembangan
+                            IoT Trainer Kit dengan sistem dan fitur yang lebih kompleks.
+                        </p>
+
+                        <div class="flex flex-wrap gap-2 pt-2">
+
+                            <span class="text-xs px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 font-mono">
+                                Arduino / ESP
+                            </span>
+
+                            <span class="text-xs px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 font-mono">
+                                Trainer Kit
+                            </span>
+
+                            <span class="text-xs px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 font-mono">
+                                IoT
+                            </span>
+
+                            <span class="text-xs px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 font-mono">
+                                Education
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="p-6 pt-0">
+
+                        <button
+                            @click="selectedProject = {
+                                title: 'IoT Trainer Kit & Educational Development',
+                                category: 'IoT Laboratory & Educational Product',
+                                desc: 'Mengembangkan mini IoT Trainer Kit sebagai media pembelajaran untuk mahasiswa Teknik Elektro maupun khalayak umum. Trainer kit dirancang agar pengguna dapat mempelajari konsep dasar IoT melalui praktik langsung menggunakan berbagai sensor, aktuator, dan mikrokontroler, serta dilengkapi dengan buku panduan penggunaan.',
+                                details: [
+                                    'Pengembangan Mini Trainer Kit: Merancang dan membuat perangkat IoT berukuran mini sebagai media pembelajaran yang praktis dan mudah digunakan.',
+                                    'Media Pembelajaran: Mengintegrasikan mikrokontroler, sensor, dan aktuator untuk memberikan pengalaman praktik dalam memahami konsep dasar Internet of Things.',
+                                    'Dokumentasi & Panduan: Menyusun buku panduan penggunaan sebagai acuan dalam proses pembelajaran dan praktik menggunakan trainer kit.',
+                                    'Kolaborasi Industri: Bekerja sama dengan PT Nocola Cilacap dalam pengembangan IoT Trainer Kit dengan sistem, fitur, dan cakupan yang lebih kompleks.',
+                                    'Implementasi Pendidikan: Trainer kit dikembangkan untuk mendukung kegiatan pembelajaran dan pengenalan teknologi IoT bagi mahasiswa Teknik Elektro maupun pengguna umum.'
+                                ],
+                                tech: ['Arduino', 'ESP', 'Sensors', 'Actuators', 'IoT', 'Trainer Kit']
+                            }"
+                            class="w-full py-3 rounded-xl bg-slate-800 hover:bg-sky-500 hover:text-white text-slate-200 text-sm font-semibold transition-all flex items-center justify-center space-x-2">
+
+                            <span>Lihat Detail Proyek</span>
+                            <i class="fa-solid fa-arrow-right text-xs"></i>
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- =====================================================
+                    PROJECT 7: SMART LOCK
+                    ===================================================== -->
+
+                <div x-show="activeTab === 'all' || activeTab === 'iot'"
+                    class="glass-panel rounded-3xl overflow-hidden border border-slate-800 flex flex-col justify-between hover:border-sky-500/50 transition-all group">
+
+                    <div class="h-64 overflow-hidden relative bg-slate-900">
+
+                        <img
+                            id="smartlockImage"
+                            src="images/smartlock1.jpg"
+                            alt="ESP32 Wireless Smart Lock"
+                            onclick="openImagePopup(this.src)"
+                            class="w-full h-full object-cover cursor-zoom-in group-hover:scale-105 transition-transform duration-500"
+                        >
+
+                        <!-- Gradient -->
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent pointer-events-none"></div>
+
+                        <!-- Category -->
+                        <div class="absolute top-4 left-4 pointer-events-none">
+                            <span class="px-3 py-1 rounded-full bg-slate-950/80 backdrop-blur-md text-yellow-400 text-xs font-semibold border border-slate-700">
+                                DIY electronics hobby
+                            </span>
+                        </div>
+
+                        <!-- Zoom -->
+                        <div class="absolute bottom-4 right-4 w-10 h-10 rounded-full bg-slate-950/80 backdrop-blur-md flex items-center justify-center text-white pointer-events-none">
+                            <i class="fa-solid fa-magnifying-glass-plus"></i>
+                        </div>
+
+                        <button
+                            onclick="changeImage('smartlock', -1)"
+                            class="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-slate-950/80 text-white hover:bg-emerald-500 transition-all flex items-center justify-center z-10">
+                            <i class="fa-solid fa-chevron-left"></i>
+                        </button>
+
+                        <button
+                            onclick="changeImage('smartlock', 1)"
+                            class="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-slate-950/80 text-white hover:bg-emerald-500 transition-all flex items-center justify-center z-10">
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </button>
+
+                    </div>
+
+
+                    <div class="p-6 space-y-4">
+
+                        <div class="flex justify-between items-center">
+                            <span class="text-slate-400 text-xs font-mono">
+                                DIY Hobbies & Embedded Prototyping
+                            </span>
+
+                            <i class="fa-solid fa-lock text-emerald-400 text-xl"></i>
+                        </div>
+
+                        <h4 class="text-xl font-bold text-white group-hover:text-sky-400 transition-colors">
+                            ESP32 Wireless Smart Lock & 1-Phase Timer Automation
+                        </h4>
+
+                        <p class="text-slate-300 text-sm leading-relaxed">
+                            Proyek hobi independen untuk mengasah keterampilan hands-on di bidang elektronika, sistem kontrol, dan pemrograman mikrokontroler. Proyek mencakup perancangan sistem ESP32 Wireless Smart Lock serta pembuatan rangkaian kontrol arus kuat 1 fasa untuk aplikasi timer automation.
+                        </p>
+
+                        <div class="flex flex-wrap gap-2 pt-2">
+
+                            <span class="text-xs px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 font-mono">
+                                ESP32
+                            </span>
+
+                            <span class="text-xs px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 font-mono">
+                                Timer Control
+                            </span>
+
+                            <span class="text-xs px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 font-mono">
+                                Prototyping
+                            </span>
+
+                            <span class="text-xs px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 font-mono">
+                                1-Phase
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="p-6 pt-0">
+
+                        <button
+                            @click="selectedProject = {
+                                title: 'ESP32 Wireless Smart Lock & 1-Phase Timer Automation',
+                                category: 'DIY Hobbies & Embedded Prototyping',
+                                desc: 'Proyek hobi independen untuk mengasah keterampilan hands-on di bidang elektronika, sistem kontrol, dan pemrograman mikrokontroler. Proyek mencakup perancangan sistem ESP32 Wireless Smart Lock serta pembuatan rangkaian kontrol arus kuat 1 fasa untuk aplikasi timer automation.',
+                                details: [
+                                    'Perancangan dan pengembangan sistem ESP32 Wireless Smart Lock untuk kontrol perangkat secara nirkabel.',
+                                    'Perancangan dan perakitan rangkaian arus kuat 1 fasa menggunakan komponen kontrol dan proteksi listrik.',
+                                    'Pembuatan panel timer automation 1 fasa untuk mengatur pengoperasian beban secara otomatis.',
+                                    'Pengujian fungsionalitas, troubleshooting, dan pengecekan rangkaian secara mandiri.'
+                                ],
+                                tech: ['ESP32', 'Arduino IDE', 'Relay', 'Contactor', 'Timer Switch', 'MCB', '1-Phase AC', 'Hardware Prototyping']
+                            }"
+                            class="w-full py-3 rounded-xl bg-slate-800 hover:bg-sky-500 hover:text-white text-slate-200 text-sm font-semibold transition-all flex items-center justify-center space-x-2">
+
+                            <span>Lihat Detail Proyek</span>
+                            <i class="fa-solid fa-arrow-right text-xs"></i>
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- =====================================================
+                    PROJECT 8: SMART OFFICE
+                    ===================================================== -->
+
+                <div x-show="activeTab === 'all' || activeTab === 'startup'"
+                    class="glass-panel rounded-3xl overflow-hidden border border-slate-800 flex flex-col justify-between hover:border-sky-500/50 transition-all group">
+
+                    <div class="h-64 overflow-hidden relative bg-slate-900">
+
+                        <img
+                            id="smartofficeImage"
+                            src="images/smartoffice1.jpg"
+                            alt="ESP32 Wireless Smart Lock"
+                            onclick="openImagePopup(this.src)"
+                            class="w-full h-full object-cover cursor-zoom-in group-hover:scale-105 transition-transform duration-500"
+                        >
+
+                        <!-- Gradient -->
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent pointer-events-none"></div>
+
+                        <!-- Category -->
+                        <div class="absolute top-4 left-4 pointer-events-none">
+                            <span class="px-3 py-1 rounded-full bg-slate-950/80 backdrop-blur-md text-yellow-400 text-xs font-semibold border border-slate-700">
+                                DIY electronics hobby
+                            </span>
+                        </div>
+
+                        <!-- Zoom -->
+                        <div class="absolute bottom-4 right-4 w-10 h-10 rounded-full bg-slate-950/80 backdrop-blur-md flex items-center justify-center text-white pointer-events-none">
+                            <i class="fa-solid fa-magnifying-glass-plus"></i>
+                        </div>
+
+                        <button
+                            onclick="changeImage('smartoffice', -1)"
+                            class="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-slate-950/80 text-white hover:bg-emerald-500 transition-all flex items-center justify-center z-10">
+                            <i class="fa-solid fa-chevron-left"></i>
+                        </button>
+
+                        <button
+                            onclick="changeImage('smartoffice', 1)"
+                            class="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-slate-950/80 text-white hover:bg-emerald-500 transition-all flex items-center justify-center z-10">
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </button>
+
+                    </div>
+
+
+                    <div class="p-6 space-y-4">
+
+                        <div class="flex justify-between items-center">
+                            <span class="text-slate-400 text-xs font-mono">
+                                Smart Office Integration & Services
+                            </span>
+                            <i class="fa-solid fa-briefcase text-emerald-400 text-xl"></i>
+                        </div>
+
+                        <h4 class="text-xl font-bold text-white group-hover:text-sky-400 transition-colors">
+                            Smart Office System & Demokit Solutions
+                        </h4>
+
+                        <p class="text-slate-300 text-sm leading-relaxed">
+                            Solusi otomatisasi ruang kerja terintegrasi profesional. Kami menyediakan layanan perancangan dan pemasangan sistem Smart Office custom sesuai kebutuhan klien—mulai dari sistem kontrol nirkabel, keamanan, hingga efisiensi energi berbasis IoT.
+                        </p>
+
+                        <div class="flex flex-wrap gap-2 pt-2">
+
+                            <span class="text-xs px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 font-mono">
+                                IoT Integration
+                            </span>
+
+                            <span class="text-xs px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 font-mono">
+                                Voice Assistant
+                            </span>
+
+                            <span class="text-xs px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 font-mono">
+                                Smart Security
+                            </span>
+
+                            <span class="text-xs px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 font-mono">
+                                Energy Monitoring
+                            </span>
+
+                            <span class="text-xs px-2.5 py-1 rounded-lg bg-slate-900 border border-slate-800 text-slate-300 font-mono">
+                                Custom Installation
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                    <div class="p-6 pt-0">
+
+                        <button
+                            @click="selectedProject = {
+                                title: 'Smart Office System & Custom Installation Services',
+                                category: 'IoT Solution & Commercial Automation',
+                                desc: 'Solusi otomatisasi ruang kerja terintegrasi profesional. Kami menyediakan layanan perancangan dan pemasangan sistem Smart Office custom sesuai kebutuhan klien—mulai dari sistem kontrol nirkabel, keamanan, hingga efisiensi energi berbasis IoT.',
+                                details: [
+                                    'Penyediaan layanan konsultasi, perancangan, dan instalasi sistem Smart Office yang disesuaikan (custom) dengan kebutuhan spesifik klien.',
+                                    'Integrasi sistem kontrol cerdas mencakup Voice Assistant, Wireless Door Lock Access, dan Lighting Control otomatis.',
+                                    'Implementasi panel monitoring energi, sistem keamanan CCTV, serta Fire Alarm System untuk perlindungan maksimal kantor.',
+                                    'Menyediakan demokit fisik langsung untuk uji coba fungsionalitas, kemudahan integrasi, dan jaminan kualitas layanan.'
+                                ],
+                                tech: ['IoT Platform', 'Voice Assistant', 'Smart Lock', 'CCTV', 'Fire Alarm', 'Energy Monitor', 'Lighting Control', 'Professional Installation']
+                            }"
+                            class="w-full py-3 rounded-xl bg-slate-800 hover:bg-sky-500 hover:text-white text-slate-200 text-sm font-semibold transition-all flex items-center justify-center space-x-2">
+
+                            <span>Lihat Detail Proyek</span>
+                            <i class="fa-solid fa-arrow-right text-xs"></i>
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =========================================================
+                IMAGE POPUP
+                Taruh satu kali saja sebelum </body>
+                ========================================================= -->
+
+            <div
+                id="imagePopup"
+                class="hidden fixed inset-0 z-[9999] bg-black/90 backdrop-blur-sm items-center justify-center p-4"
+                onclick="closeImagePopup()">
+
+                <!-- Close -->
+                <button
+                    onclick="closeImagePopup()"
+                    class="absolute top-6 right-6 w-12 h-12 rounded-full bg-slate-900/90 border border-slate-700 text-white hover:bg-red-500 transition-all flex items-center justify-center z-20">
+
+                    <i class="fa-solid fa-xmark text-xl"></i>
+
+                </button>
+
+
+                <!-- Previous popup image -->
+                <button
+                    onclick="changePopupImage(-1); event.stopPropagation();"
+                    class="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-slate-900/80 border border-slate-700 text-white hover:bg-sky-500 transition-all flex items-center justify-center z-20">
+
+                    <i class="fa-solid fa-chevron-left"></i>
+
+                </button>
+
+
+                <!-- Main popup image -->
+                <img
+                    id="popupImage"
+                    src=""
+                    alt="Preview gambar proyek"
+                    onclick="event.stopPropagation()"
+                    class="max-w-[92vw] max-h-[90vh] object-contain rounded-xl shadow-2xl">
+
+
+                <!-- Next popup image -->
+                <button
+                    onclick="changePopupImage(1); event.stopPropagation();"
+                    class="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-slate-900/80 border border-slate-700 text-white hover:bg-sky-500 transition-all flex items-center justify-center z-20">
+
+                    <i class="fa-solid fa-chevron-right"></i>
+
+                </button>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="akademik" class="py-24 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-xs font-bold uppercase tracking-wider text-sky-400 mb-2">Kontribusi Kampus</h2>
+                <h3 class="text-3xl sm:text-4xl font-extrabold text-white">Pengalaman Akademik, Lab & Organisasi</h3>
+                <p class="text-slate-400 mt-3">Peran aktif sebagai Asisten Lab IoT, Asisten Jurnal JEEICT, dan pengurus Himpunan Mahasiswa.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Asisten Lab IoT -->
+                <div class="glass-panel p-6 rounded-3xl border border-slate-800 space-y-4">
+                    <div class="w-12 h-12 rounded-2xl bg-sky-500/10 text-sky-400 flex items-center justify-center text-xl font-bold">
+                        <i class="fa-solid fa-laptop-code"></i>
+                    </div>
+                    <h4 class="text-lg font-bold text-white">Asisten Lab IoT - UNS</h4>
+                    <p class="text-xs text-sky-400 font-mono">Jan 2024 - Agt 2025</p>
+                    <p class="text-slate-300 text-sm leading-relaxed">
+                        Mendampingi 20+ mahasiswa dalam proyek praktikum & riset IoT, debugging hardware/software, serta pelatihan peserta internasional di IoT Summer Course 2025.
+                    </p>
+                </div>
+
+                <!-- Asisten Jurnal JEEICT -->
+                <div class="glass-panel p-6 rounded-3xl border border-slate-800 space-y-4">
+                    <div class="w-12 h-12 rounded-2xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-xl font-bold">
+                        <i class="fa-solid fa-book-open"></i>
+                    </div>
+                    <h4 class="text-lg font-bold text-white">Asisten Jurnal JEEICT</h4>
+                    <p class="text-xs text-emerald-400 font-mono">Jan 2024 - Agt 2025</p>
+                    <p class="text-slate-300 text-sm leading-relaxed">
+                        Mengelola ~10 naskah ilmiah per terbitan dari submission hingga pengecekan format sesuai template JEEICT. Berkoordinasi dengan editor dan reviewer.
+                    </p>
+                </div>
+
+                <!-- HMTE UNS -->
+                <div class="glass-panel p-6 rounded-3xl border border-slate-800 space-y-4">
+                    <div class="w-12 h-12 rounded-2xl bg-purple-500/10 text-purple-400 flex items-center justify-center text-xl font-bold">
+                        <i class="fa-solid fa-users"></i>
+                    </div>
+                    <h4 class="text-lg font-bold text-white">Sekretaris - HMTE UNS</h4>
+                    <p class="text-xs text-purple-400 font-mono">Mar 2023 - Mar 2024</p>
+                    <p class="text-slate-300 text-sm leading-relaxed">
+                        Mengelola administrasi & dokumentasi acara Proteus 4.0 (84 peserta). Sebelumnya menjadi Ketua Acara Webinar WEBSITE 2022 (130+ peserta) di Divisi Advokesma.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="sertifikat" class="py-24 bg-slate-900/50 border-t border-slate-900 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-xs font-bold uppercase tracking-wider text-sky-400 mb-2">Kredensial Resmi</h2>
+                <h3 class="text-3xl sm:text-4xl font-extrabold text-white">Sertifikasi & Pencapaian</h3>
+                <p class="text-slate-400 mt-3">Bukti kompetensi profesional dalam bidang bahasa, K3L, data analytics, dan perkantoran.</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Cert 1 -->
+                <div class="glass-panel p-6 rounded-2xl border border-slate-800 flex items-start space-x-4">
+                    <div class="p-3 rounded-xl bg-sky-500/10 text-sky-400 text-lg">
+                        <i class="fa-solid fa-certificate"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white text-sm">TOEFL ITP (Central Course)</h4>
+                        <p class="text-xs text-sky-400 font-mono mt-0.5">Skor: 593 | 2025</p>
+                    </div>
+                </div>
+
+                <!-- Cert 2 -->
+                <div class="glass-panel p-6 rounded-2xl border border-slate-800 flex items-start space-x-4">
+                    <div class="p-3 rounded-xl bg-emerald-500/10 text-emerald-400 text-lg">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white text-sm">K3L Fakultas Teknik UNS</h4>
+                        <p class="text-xs text-emerald-400 font-mono mt-0.5">Komite K3L FT UNS | 2024</p>
+                    </div>
+                </div>
+
+                <!-- Cert 3 -->
+                <div class="glass-panel p-6 rounded-2xl border border-slate-800 flex items-start space-x-4">
+                    <div class="p-3 rounded-xl bg-purple-500/10 text-purple-400 text-lg">
+                        <i class="fa-solid fa-chart-line"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white text-sm">Python Data Analyst</h4>
+                        <p class="text-xs text-purple-400 font-mono mt-0.5">Sertifikasi Profesional | 2023</p>
+                    </div>
+                </div>
+
+                <!-- Cert 4 -->
+                <div class="glass-panel p-6 rounded-2xl border border-slate-800 flex items-start space-x-4">
+                    <div class="p-3 rounded-xl bg-yellow-500/10 text-yellow-400 text-lg">
+                        <i class="fa-solid fa-globe"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white text-sm">English for Academic Purpose</h4>
+                        <p class="text-xs text-yellow-400 font-mono mt-0.5">EAP Certification | 2024</p>
+                    </div>
+                </div>
+
+                <!-- Cert 5 -->
+                <div class="glass-panel p-6 rounded-2xl border border-slate-800 flex items-start space-x-4">
+                    <div class="p-3 rounded-xl bg-sky-500/10 text-sky-400 text-lg">
+                        <i class="fa-solid fa-file-excel"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white text-sm">Microsoft Office Suite</h4>
+                        <p class="text-xs text-sky-400 font-mono mt-0.5">Word, Excel, PowerPoint | 2023</p>
+                    </div>
+                </div>
+
+                <!-- Cert 6 -->
+                <div class="glass-panel p-6 rounded-2xl border border-slate-800 flex items-start space-x-4">
+                    <div class="p-3 rounded-xl bg-emerald-500/10 text-emerald-400 text-lg">
+                        <i class="fa-solid fa-award"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white text-sm">ICIMECE 2023 Committee</h4>
+                        <p class="text-xs text-emerald-400 font-mono mt-0.5">Online Operator & Support</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="kontak" class="py-24 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <space class="space-y-6">
+                    <h2 class="text-xs font-bold uppercase tracking-wider text-sky-400">Hubungi Saya</h2>
+                    <h3 class="text-3xl sm:text-4xl font-extrabold text-white">Mari Berkolaborasi dalam Proyek Masa Depan</h3>
+                    <p class="text-slate-300 leading-relaxed">
+                        Terbuka untuk peluang kerja penuh waktu, kolaborasi proyek IoT, konsultasi sistem tenaga listrik, maupun diskusi teknologi energi terbarukan.
+                    </p>
+
+                    <div class="space-y-4 pt-4">
+                        <div class="flex items-center space-x-4 text-slate-300">
+                            <div class="w-12 h-12 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center text-sky-400">
+                                <i class="fa-solid fa-envelope"></i>
+                            </div>
+                            <div>
+                                <div class="text-xs text-slate-400">Email Utama</div>
+                                <a href="mailto:insanfadhil111@gmail.com" class="font-semibold text-white hover:text-sky-400">insanfadhil111@gmail.com</a>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center space-x-4 text-slate-300">
+                            <div class="w-12 h-12 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center text-emerald-400">
+                                <i class="fa-solid fa-phone"></i>
+                            </div>
+                            <div>
+                                <div class="text-xs text-slate-400">Nomor Telepon / WhatsApp</div>
+                                <a href="https://wa.me/6281252132181" target="_blank" class="font-semibold text-white hover:text-sky-400">+62 812-5213-2181</a>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center space-x-4 text-slate-300">
+                            <div class="w-12 h-12 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center text-blue-400">
+                                <i class="fa-brands fa-linkedin-in"></i>
+                            </div>
+                            <div>
+                                <div class="text-xs text-slate-400">LinkedIn</div>
+                                <a href="https://www.linkedin.com/in/insan-fadhil-maulana" target="_blank" class="font-semibold text-white hover:text-sky-400">linkedin.com/in/insan-fadhil-maulana</a>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center space-x-4 text-slate-300">
+                            <div class="w-12 h-12 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-center text-purple-400">
+                                <i class="fa-brands fa-github"></i>
+                            </div>
+                            <div>
+                                <div class="text-xs text-slate-400">GitHub</div>
+                                <a href="https://github.com/insanfadhil111" target="_blank" class="font-semibold text-white hover:text-sky-400">github.com/insanfadhil111</a>
+                            </div>
+                        </div>
+                    </div>
+                </space>
+
+                <!-- Interactive Contact Form -->
+                <div class="glass-panel p-8 rounded-3xl border border-slate-800 relative">
+                    <template x-if="!contactSubmitted">
+                        <form @submit.prevent="contactSubmitted = true" class="space-y-6">
+                            <h4 class="text-xl font-bold text-white mb-2">Kirim Pesan Langsung</h4>
+                            
+                            <div>
+                                <label class="block text-xs font-medium text-slate-400 mb-2">Nama Lengkap</label>
+                                <input type="text" x-model="formData.name" required class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white focus:outline-none focus:border-sky-500 text-sm" placeholder="Nama Anda">
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-medium text-slate-400 mb-2">Email Anda</label>
+                                <input type="email" x-model="formData.email" required class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white focus:outline-none focus:border-sky-500 text-sm" placeholder="email@domain.com">
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-medium text-slate-400 mb-2">Pesan</label>
+                                <textarea rows="4" x-model="formData.message" required class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 text-white focus:outline-none focus:border-sky-500 text-sm" placeholder="Tuliskan pesan atau penawaran kerja..."></textarea>
+                            </div>
+
+                            <button type="submit" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-sky-500 to-blue-600 text-white font-semibold shadow-lg shadow-sky-500/25 hover:shadow-sky-500/40 transition-all">
+                                Kirim Pesan Sekarang
+                            </button>
+                        </form>
+                    </template>
+
+                    <!-- Success Simulation State -->
+                    <template x-if="contactSubmitted">
+                        <div class="py-16 text-center space-y-4">
+                            <div class="w-16 h-16 rounded-full bg-emerald-500/20 text-emerald-400 mx-auto flex items-center justify-center text-3xl">
+                                <i class="fa-solid fa-circle-check"></i>
+                            </div>
+                            <h4 class="text-2xl font-bold text-white">Pesan Berhasil Terkirim!</h4>
+                            <p class="text-slate-300 text-sm max-w-sm mx-auto">
+                                Terima kasih <strong class="text-white" x-text="formData.name"></strong>. Pesan Anda telah disimulasikan terkirim ke Insan Fadhil Maulana.
+                            </p>
+                            <button @click="contactSubmitted = false; formData = { name: '', email: '', message: '' }" class="px-6 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-sm font-semibold transition-all mt-4">
+                                Kirim Pesan Lain
+                            </button>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="galeri-foto" class="py-24 bg-slate-900/40 border-t border-slate-900 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-xs font-bold uppercase tracking-wider text-sky-400 mb-2">Galeri & Dokumentasi Lapangan</h2>
+                <h3 class="text-3xl sm:text-4xl font-extrabold text-white">Aktivitas Profesional, Riset & Lapangan</h3>
+                <p class="text-slate-400 mt-3">Dokumentasi visual dari magang industri, startup, lab IoT, hingga pelatihan internasional.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Gallery Item 1: Wisuda / Profil -->
+                <div class="glass-panel rounded-3xl overflow-hidden border border-slate-800 group">
+                    <div class="h-80 overflow-hidden relative bg-slate-900">
+                        <img src="images/WisudaFT.jpg" alt="Wisuda Teknik Elektro UNS" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://placehold.co/600x400/131d31/0ea5e9?text=Wisuda+UNS'">
+                        <div class="absolute top-4 right-4 px-3 py-1 rounded-full bg-slate-950/80 backdrop-blur-md text-sky-400 text-xs font-mono border border-slate-800">
+                            2025
+                        </div>
+                    </div>
+                    <div class="p-6 space-y-2">
+                        <h4 class="font-bold text-white text-lg">Wisuda S1 Teknik Elektro UNS</h4>
+                        <p class="text-slate-300 text-sm leading-relaxed">
+                            Kelulusan Program Sarjana Teknik Elektro Universitas Sebelas Maret dengan predikat Cum Laude (IPK 3.68).
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 2: Pertamina EP Cepu -->
+                <div class="glass-panel rounded-3xl overflow-hidden border border-slate-800 group">
+                    <div class="h-80 overflow-hidden relative bg-slate-900">
+                        <img src="images/MagangPertaminaEP.jpg" alt="Magang Pertamina EP Cepu" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://placehold.co/600x400/131d31/eab308?text=Pertamina+EP'">
+                        <div class="absolute top-4 right-4 px-3 py-1 rounded-full bg-slate-950/80 backdrop-blur-md text-yellow-400 text-xs font-mono border border-slate-800">
+                            Magang
+                        </div>
+                    </div>
+                    <div class="p-6 space-y-2">
+                        <h4 class="font-bold text-white text-lg">Central Processing Plant Gundih</h4>
+                        <p class="text-slate-300 text-sm leading-relaxed">
+                            Kegiatan asesmen lapangan dan analisis rangkaian kontrol VSD sumur LDK-235 di PT Pertamina EP Cepu Zona 11.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 3: Trofis Startup & Pameran -->
+                <div class="glass-panel rounded-3xl overflow-hidden border border-slate-800 group">
+                    <div class="h-80 overflow-hidden relative bg-slate-900">
+                        <img src="images/TrofisBooth.jpg" alt="Trofis Startup SEMESTA UNS" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://placehold.co/600x400/131d31/10b981?text=Trofis+Startup'">
+                        <div class="absolute top-4 right-4 px-3 py-1 rounded-full bg-slate-950/80 backdrop-blur-md text-emerald-400 text-xs font-mono border border-slate-800">
+                            CEO / Founder
+                        </div>
+                    </div>
+                    <div class="p-6 space-y-2">
+                        <h4 class="font-bold text-white text-lg">Pameran Startup SEMESTA UNS</h4>
+                        <p class="text-slate-300 text-sm leading-relaxed">
+                            Kunjungan Wakil Menteri Pendidikan Tinggi, Sains, dan Teknologi di booth startup Trofis penyedia Smart Energy Monitoring.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 4: Lab IoT & Summer Course -->
+                <div class="glass-panel rounded-3xl overflow-hidden border border-slate-800 group">
+                    <div class="h-64 overflow-hidden relative bg-slate-900">
+                        <img src="images/IoTSummer.jpg" alt="IoT Summer Course FT UNS" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://placehold.co/600x400/131d31/0ea5e9?text=IoT+Summer+Course'">
+                        <div class="absolute top-4 right-4 px-3 py-1 rounded-full bg-slate-950/80 backdrop-blur-md text-sky-400 text-xs font-mono border border-slate-800">
+                            Technical Trainer
+                        </div>
+                    </div>
+                    <div class="p-6 space-y-2">
+                        <h4 class="font-bold text-white text-lg">IoT Applications Workshop</h4>
+                        <p class="text-slate-300 text-sm leading-relaxed">
+                            Pendampingan dan pelatihan praktis penggunaan IoT Trainer Kit bagi peserta internasional pada FT UNS Summer Course 2025.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 5: MBKM Desa Kepyar -->
+                <div class="glass-panel rounded-3xl overflow-hidden border border-slate-800 group">
+                    <div class="h-180 overflow-hidden relative bg-slate-900">
+                        <img src="images/kepyar.jpg" alt="MBKM Desa Kepyar Wonogiri" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://placehold.co/600x400/131d31/a855f7?text=Desa+Kepyar'">
+                        <div class="absolute top-4 right-4 px-3 py-1 rounded-full bg-slate-950/80 backdrop-blur-md text-purple-400 text-xs font-mono border border-slate-800">
+                            Ketua Tim
+                        </div>
+                    </div>
+                    <div class="p-6 space-y-2">
+                        <h4 class="font-bold text-white text-lg">MBKM Digitalisasi Desa Kepyar</h4>
+                        <p class="text-slate-300 text-sm leading-relaxed">
+                            Implementasi sistem monitoring PJU tenaga surya dan pembuatan website desa di Wonogiri bersama tim dan pemangku kepentingan lokal.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Gallery Item 6: Central Java Secretariat ENMS -->
+                <div class="glass-panel rounded-3xl overflow-hidden border border-slate-800 group">
+
+                    <div class="h-100 overflow-hidden relative bg-slate-900">
+
+                        <!-- Image -->
+                        <img 
+                            id="setdaImage"
+                            src="images/setda1.jpg"
+                            alt="Kantor Setda Jawa Tengah"
+                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        >
+
+                        <!-- Tombol kiri -->
+                        <button 
+                            onclick="changeSetdaImage(-1)"
+                            class="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-slate-950/70 backdrop-blur-md text-white hover:bg-blue-600 transition z-10"
+                        >
+                            &#10094;
+                        </button>
+
+                        <!-- Tombol kanan -->
+                        <button 
+                            onclick="changeSetdaImage(1)"
+                            class="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-slate-950/70 backdrop-blur-md text-white hover:bg-blue-600 transition z-10"
+                        >
+                            &#10095;
+                        </button>
+
+                        <!-- Label -->
+                        <div class="absolute top-4 right-4 px-3 py-1 rounded-full bg-slate-950/80 backdrop-blur-md text-blue-400 text-xs font-mono border border-slate-800">
+                            Proyek Komersial
+                        </div>
+
+                    </div>
+
+                    <div class="p-6 space-y-2">
+                        <h4 class="font-bold text-white text-lg">
+                            Instalasi Kantor Setda Jawa Tengah
+                        </h4>
+
+                        <p class="text-slate-300 text-sm leading-relaxed">
+                            Instalasi perangkat keras dan sistem monitoring energi panel listrik di Semarang bersama PT Batex senilai Rp28 juta.
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <div x-show="selectedProject !== null" x-transition.opacity class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md" style="display: none;">
+        <div @click.away="selectedProject = null" class="glass-panel w-full max-w-2xl rounded-3xl border border-slate-800 p-6 sm:p-8 relative max-h-[90vh] overflow-y-auto">
+            <button @click="selectedProject = null" class="absolute top-6 right-6 text-slate-400 hover:text-white p-2 rounded-lg bg-slate-900 border border-slate-800">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+
+            <template x-if="selectedProject">
+                <div class="space-y-6">
+                    <div>
+                        <span class="text-xs font-mono text-sky-400 uppercase tracking-wider" x-text="selectedProject.category"></span>
+                        <h3 class="text-2xl font-bold text-white mt-1" x-text="selectedProject.title"></h3>
+                    </div>
+
+                    <p class="text-slate-300 text-sm leading-relaxed" x-text="selectedProject.desc"></p>
+
+                    <div>
+                        <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Poin Utama Pelaksanaan:</h4>
+                        <ul class="space-y-2">
+                            <template x-for="detail in selectedProject.details">
+                                <li class="flex items-start space-x-2 text-sm text-slate-300">
+                                    <i class="fa-solid fa-circle-check text-sky-400 mt-1 flex-shrink-0"></i>
+                                    <span x-text="detail"></span>
+                                </li>
+                            </template>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-3">Teknologi & Tools Terkait:</h4>
+                        <div class="flex flex-wrap gap-2">
+                            <template x-for="t in selectedProject.tech">
+                                <span class="px-3 py-1 rounded-lg bg-slate-900 border border-slate-800 text-sky-400 text-xs font-mono" x-text="t"></span>
+                            </template>
+                        </div>
+                    </div>
+
+                    <div class="pt-4 border-t border-slate-800 flex justify-end">
+                        <button @click="selectedProject = null" class="px-6 py-2.5 rounded-xl bg-sky-500 text-white text-sm font-semibold hover:bg-sky-600 transition-all">
+                            Tutup Detail
+                        </button>
+                    </div>
+                </div>
+            </template>
+        </div>
+    </div>
+
+    <footer class="bg-slate-950 border-t border-slate-900 py-12 text-center text-slate-500 text-xs">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
+            <div class="flex justify-center space-x-6 text-lg">
+                <a href="https://www.linkedin.com/in/insan-fadhil-maulana" target="_blank" class="hover:text-sky-400 transition-colors"><i class="fa-brands fa-linkedin"></i></a>
+                <a href="https://github.com/insanfadhil111" target="_blank" class="hover:text-sky-400 transition-colors"><i class="fa-brands fa-github"></i></a>
+                <a href="mailto:insanfadhil111@gmail.com" class="hover:text-sky-400 transition-colors"><i class="fa-solid fa-envelope"></i></a>
+                <a href="https://wa.me/6281252132181" target="_blank" class="hover:text-sky-400 transition-colors"><i class="fa-brands fa-whatsapp"></i></a>
+            </div>
+            <p>&copy; 2026 Insan Fadhil Maulana, S.T. All Rights Reserved. Bachelor of Electrical Engineering, Universitas Sebelas Maret (Cum Laude).</p>
+        </div>
+    </footer>
+        <!-- Image Popup Modal -->
+        <div 
+            id="imagePopup"
+            class="hidden fixed inset-0 z-[9999] bg-black/90 backdrop-blur-sm items-center justify-center p-4"
+            onclick="closeImagePopup()"
+        >
+
+            <!-- Tombol Close -->
+            <button 
+                onclick="closeImagePopup()"
+                class="absolute top-6 right-6 w-12 h-12 rounded-full bg-slate-900/80 border border-slate-700 text-white hover:bg-red-500 transition-all flex items-center justify-center"
+            >
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+
+            <!-- Gambar Besar -->
+            <img 
+                id="popupImage"
+                src=""
+                alt="Preview gambar proyek"
+                onclick="event.stopPropagation()"
+                class="max-w-full max-h-[90vh] object-contain rounded-xl shadow-2xl"
+            >
+
+        </div>
+</body>
+</html>
